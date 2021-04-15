@@ -6,7 +6,8 @@
   "author": "José Oliveira <j.oliveira90@live.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts"
+    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
@@ -26,6 +27,7 @@
     "express-async-errors": "^3.1.1",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.32"
+    "typeorm": "^0.2.32",
+    "uuid": "^8.3.2"
   }
 }
