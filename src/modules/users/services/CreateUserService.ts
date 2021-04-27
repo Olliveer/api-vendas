@@ -14,10 +14,10 @@ class CreateUserService {
   async execute({ name, email, password }: IRequestUser): Promise<User> {
     const usersRepository = getCustomRepository(UserRepository);
 
-    const emailExists = usersRepository.findByEmail(email);
+    const emailExists = await usersRepository.findByEmail(email);
 
     if (emailExists) {
-      throw new AppError('Eamil address already used.');
+      throw new AppError('Email address already used.');
     }
 
     const user = usersRepository.create({
