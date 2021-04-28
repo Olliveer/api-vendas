@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '../../../config/auth';
 import AppError from '../../errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -22,7 +22,7 @@ export default function isAuthenticate(req: Request, res: Response, next: NextFu
   try {
     const decodedToken = verify(token, process.env.JWT_SECRET as string);
 
-    const { sub } = decodedToken as TokenPayload;
+    const { sub } = decodedToken as ITokenPayload;
 
     req.user = {
       id: sub,
