@@ -2,9 +2,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../../../config/auth';
-import AppError from '../../../shared/errors/AppError';
+import AppError from '../../errors/AppError';
 
-function isAuthenticate(req: Request, res: Response, next: NextFunction): void {
+export default function isAuthenticate(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -14,12 +14,10 @@ function isAuthenticate(req: Request, res: Response, next: NextFunction): void {
   const [, token] = authHeader.split(' ');
 
   try {
-    const decodeToken = verify(token, authConfig.jwt.secret);
+    const decodeToken = verify(token, process.env.JWT_SECRET as string);
 
     return next();
   } catch (error) {
     throw new AppError('Invalid JWT Token.');
   }
 }
-
-export default isAuthenticate;
