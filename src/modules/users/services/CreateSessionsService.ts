@@ -1,4 +1,5 @@
 import { compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 import { getCustomRepository } from 'typeorm';
 import AppError from '../../../shared/errors/AppError';
 import UserRepository from '../repositories/UsersRepository';
@@ -11,6 +12,7 @@ interface IRequestUser {
 
 interface IResponse {
   user: User;
+  token: string;
 }
 
 class CreateSessionsService {
@@ -30,7 +32,15 @@ class CreateSessionsService {
       throw new AppError('Incorrect email or password.', 401);
     }
 
-    return user;
+    const token = sign({}, process.env.JWT_SECRET as string, {
+      subject: user.id,
+      expiresIn: '1d',
+    });
+
+    return {
+      user,
+      token,
+    };
   }
 }
 
