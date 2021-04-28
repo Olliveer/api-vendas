@@ -4,6 +4,12 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '../../../config/auth';
 import AppError from '../../errors/AppError';
 
+interface TokenPayload {
+  iat: number;
+  exp: number;
+  sub: string;
+}
+
 export default function isAuthenticate(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
 
@@ -14,7 +20,13 @@ export default function isAuthenticate(req: Request, res: Response, next: NextFu
   const [, token] = authHeader.split(' ');
 
   try {
-    const decodeToken = verify(token, process.env.JWT_SECRET as string);
+    const decodedToken = verify(token, process.env.JWT_SECRET as string);
+
+    const { sub } = decodedToken as TokenPayload;
+
+    req.user = {
+      id: sub,
+    };
 
     return next();
   } catch (error) {
