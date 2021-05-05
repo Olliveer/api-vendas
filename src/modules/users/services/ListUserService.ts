@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
-import UserRepository from '../repositories/UsersRepository';
 import User from '../typeorm/entities/User';
+import UserRepository from '../typeorm/repositories/UsersRepository';
 
 class ListUserService {
   // eslint-disable-next-line class-methods-use-this

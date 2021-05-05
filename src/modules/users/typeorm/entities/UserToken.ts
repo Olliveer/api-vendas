@@ -26,6 +26,9 @@ class UserToken {
     if (!this.id) {
       this.id = uuid();
     }
+    if (!this.token) {
+      this.token = uuid();
+    }
   }
 }
 

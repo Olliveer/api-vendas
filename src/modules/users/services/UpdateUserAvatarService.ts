@@ -3,9 +3,9 @@ import path from 'path';
 import { getCustomRepository } from 'typeorm';
 import fs from 'fs';
 import AppError from '../../../shared/errors/AppError';
-import UserRepository from '../repositories/UsersRepository';
 import User from '../typeorm/entities/User';
 import uploadConfig from '../../../config/upload';
+import UserRepository from '../typeorm/repositories/UsersRepository';
 
 interface IRequestUser {
   user_id: string;

@@ -22,15 +22,6 @@ export class CreateUsersTokens1619724028968 implements MigrationInterface {
             type: 'uuid',
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'password',
-            type: 'varchar',
-          },
-          {
             name: 'created_at',
             type: 'timestamp with time zone',
             default: 'now()',
