@@ -37,6 +37,8 @@ class ResetPasswordService {
     }
 
     user.password = await hash(password, 10);
+
+    await usersRepository.save(user);
   }
 }
 
