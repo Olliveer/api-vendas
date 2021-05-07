@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { getCustomRepository } from 'typeorm';
+import EtherealMail from '../../../config/mail/EtherealMail';
 import AppError from '../../../shared/errors/AppError';
 import UserRepository from '../typeorm/repositories/UsersRepository';
 import UserTokenRepository from '../typeorm/repositories/UserTokenRepository';
@@ -22,7 +23,10 @@ class SendForgotPasswordEmailService {
 
     const token = await userTokenRepository.generate(user.id);
 
-    console.log('SERVICE', token);
+    await EtherealMail.sendMail({
+      to: email,
+      body: `Solicitação de senha recebida: ${token?.token}`,
+    });
   }
 }
 
