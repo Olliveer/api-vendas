@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import nodemailer from 'nodemailer';
 import HandleBarsMailTemplate from './HandleBarsMailTemplate';
 
@@ -6,7 +7,7 @@ interface ITemplateVariable{
 }
 
 interface IParseEmailTemplate {
-  template: string;
+  file: string;
   variables: ITemplateVariable;
 }
 
