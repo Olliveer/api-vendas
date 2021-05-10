@@ -1,13 +1,17 @@
 /* eslint-disable camelcase */
 import {
-  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn,
+  Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import OrdersProducts from '../../../orders/typeorm/entities/OrdersProducts';
 
 @Entity('products')
 class Product {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   id: string;
+
+  @OneToMany(() => OrdersProducts, (order_products) => order_products.product)
+  order_products: OrdersProducts[];
 
   @Column()
   name: string;
