@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
@@ -9,7 +10,7 @@ class UsersController {
 
     const users = await listUser.execute();
 
-    return res.json(users);
+    return res.json(classToClass(users));
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -23,7 +24,7 @@ class UsersController {
       password,
     });
 
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 }
 

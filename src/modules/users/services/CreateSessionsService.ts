@@ -32,7 +32,7 @@ class CreateSessionsService {
       throw new AppError('Incorrect email or password.', 401);
     }
 
-    const token = sign({}, process.env.JWT_SECRET as string, {
+    const token = sign({}, process.env.APP_JWT_SECRET as string, {
       subject: user.id,
       expiresIn: '1d',
     });

@@ -20,7 +20,7 @@ export default function isAuthenticate(req: Request, res: Response, next: NextFu
   const [, token] = authHeader.split(' ');
 
   try {
-    const decodedToken = verify(token, process.env.JWT_SECRET as string);
+    const decodedToken = verify(token, process.env.APP_JWT_SECRET as string);
 
     const { sub } = decodedToken as ITokenPayload;
 

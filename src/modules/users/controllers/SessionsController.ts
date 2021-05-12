@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import CreateSessionsService from '../services/CreateSessionsService';
 
@@ -10,7 +11,7 @@ class SessionsController {
 
     const user = await createSessionService.execute({ email, password });
 
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 }
 
