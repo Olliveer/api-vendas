@@ -10,7 +10,12 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   },
@@ -22,6 +27,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "class-methods-use-this": "off",
     "no-console": "warn",
     "linebreak-style": [
       "error",

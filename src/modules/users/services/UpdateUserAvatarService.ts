@@ -13,7 +13,6 @@ interface IRequestUser {
 }
 
 class UpdateUserAvatarService {
-  // eslint-disable-next-line class-methods-use-this
   async execute({ user_id, avatarFileName }: IRequestUser): Promise<User> {
     const usersRepository = getCustomRepository(UserRepository);
 
