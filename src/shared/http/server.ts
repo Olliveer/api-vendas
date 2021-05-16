@@ -23,7 +23,6 @@ app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 app.use(errors());
 
-// eslint-disable-next-line no-unused-vars
 app.use((error: Error, req: Request, res: Response, _next: NextFunction) => {
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({
@@ -31,6 +30,8 @@ app.use((error: Error, req: Request, res: Response, _next: NextFunction) => {
       message: error.message,
     });
   }
+
+  console.log(error);
   return res.status(500).json({
     status: 'error',
     message: 'Internal server error',

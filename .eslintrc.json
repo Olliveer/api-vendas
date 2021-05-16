@@ -28,7 +28,9 @@
   ],
   "rules": {
     "class-methods-use-this": "off",
+    "camelcase": "off",
     "no-console": "warn",
+    "no-unused-vars": "off",
     "linebreak-style": [
       "error",
       "windows"
