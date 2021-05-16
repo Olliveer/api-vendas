@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import RedisCache from '../../../shared/cache/RedisCache';
+import redisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
 import ProductRepository from '../typeorm/repositories/ProductRepository';
 
@@ -8,7 +8,6 @@ interface IRequestProduct {
 }
 
 class DeleteProductService {
-  // eslint-disable-next-line class-methods-use-this
   public async execute({ id }: IRequestProduct): Promise<void> {
     const productRepository = getCustomRepository(ProductRepository);
 
@@ -17,8 +16,6 @@ class DeleteProductService {
     if (!product) {
       throw new AppError('Product not found.');
     }
-
-    const redisCache = new RedisCache();
 
     await redisCache.invalidate('api-vendas-PRODUCTS_LIST');
 

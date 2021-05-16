@@ -8,7 +8,6 @@ interface IRequestProduct {
 }
 
 class ShowProductService {
-  // eslint-disable-next-line class-methods-use-this
   public async execute({ id }: IRequestProduct): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
 

@@ -1,14 +1,11 @@
 import { getCustomRepository } from 'typeorm';
 import Product from '../typeorm/entities/Product';
 import ProductRepository from '../typeorm/repositories/ProductRepository';
-import RedisCache from '../../../shared/cache/RedisCache';
+import redisCache from '../../../shared/cache/RedisCache';
 
 class ListProductService {
-  // eslint-disable-next-line class-methods-use-this
   public async execute(): Promise<Product[]> {
     const productRepository = getCustomRepository(ProductRepository);
-
-    const redisCache = new RedisCache();
 
     let products = await redisCache.recover<Product[]>('api-vendas-PRODUCTS_LIST');
 
