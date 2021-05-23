@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { hash } from 'bcrypt';
 import { addHours, isAfter } from 'date-fns';
 import { getCustomRepository } from 'typeorm';

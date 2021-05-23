@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable class-methods-use-this */
 import { getCustomRepository } from 'typeorm';
 import AppError from '../../../shared/errors/AppError';
 import User from '../typeorm/entities/User';

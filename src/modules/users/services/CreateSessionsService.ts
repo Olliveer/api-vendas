@@ -16,7 +16,6 @@ interface IResponse {
 }
 
 class CreateSessionsService {
-  // eslint-disable-next-line class-methods-use-this
   async execute({ email, password }: IRequestUser): Promise<IResponse> {
     const usersRepository = getCustomRepository(UserRepository);
 

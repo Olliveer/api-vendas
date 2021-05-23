@@ -1,8 +1,6 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable import/prefer-default-export */
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUsersTokens1619724028968 implements MigrationInterface {
+class CreateUsersTokens1619724028968 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -50,3 +48,5 @@ export class CreateUsersTokens1619724028968 implements MigrationInterface {
     await queryRunner.dropTable('user_tokens');
   }
 }
+
+export default CreateUsersTokens1619724028968;
