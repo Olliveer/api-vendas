@@ -1,5 +1,7 @@
+import { inject } from 'tsyringe';
 import { getCustomRepository } from 'typeorm';
 import AppError from '../../../shared/errors/AppError';
+import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 import Product from '../typeorm/entities/Product';
 import ProductRepository from '../typeorm/repositories/ProductRepository';
 
@@ -8,6 +10,11 @@ interface IRequestProduct {
 }
 
 class ShowProductService {
+  constructor(
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepository,
+  ) {}
+
   public async execute({ id }: IRequestProduct): Promise<Product> {
     const productRepository = getCustomRepository(ProductRepository);
 

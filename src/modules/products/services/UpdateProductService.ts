@@ -1,8 +1,7 @@
-import { getCustomRepository } from 'typeorm';
+import { inject } from 'tsyringe';
 import redisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
 import Product from '../typeorm/entities/Product';
-import ProductRepository from '../typeorm/repositories/ProductRepository';
 
 interface IRequestProduct {
   id: string;
@@ -12,11 +11,14 @@ interface IRequestProduct {
 }
 
 class UpdateProductService {
+  constructor(
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepository,
+  ) {}
+
   public async execute({
     id, name, price, quantity,
   }: IRequestProduct): Promise<Product> {
-    const productRepository = getCustomRepository(ProductRepository);
-
     const product = await productRepository.findOne(id);
 
     if (!product) {

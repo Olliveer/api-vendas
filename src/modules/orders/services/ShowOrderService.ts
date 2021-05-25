@@ -1,19 +1,17 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable camelcase */
-import { getCustomRepository } from 'typeorm';
+import { inject } from 'tsyringe';
 import AppError from '../../../shared/errors/AppError';
-import Order from '../typeorm/entities/Order';
-import OrdersRepository from '../typeorm/repositories/OrdersRepository';
-
-interface IRequestOrder {
-  id: string;
-}
+import { IOrder } from '../domain/Models/IOrder';
+import { IShowOrder } from '../domain/Models/IShowOrder';
+import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
 
 class ShowOrderService {
-  async execute({ id }: IRequestOrder): Promise<Order> {
-    const ordersRepository = getCustomRepository(OrdersRepository);
+  constructor(
+    @inject('OrdersRepository')
+    private ordersRepository: IOrdersRepository,
+  ) {}
 
-    const order = await ordersRepository.findById(id);
+  async execute({ id }: IShowOrder): Promise<IOrder> {
+    const order = await this.ordersRepository.findById(id);
 
     if (!order) {
       throw new AppError('Order not found');

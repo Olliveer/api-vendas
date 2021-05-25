@@ -1,28 +1,26 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable camelcase */
+import { inject } from 'tsyringe';
 import { getCustomRepository } from 'typeorm';
 import AppError from '../../../shared/errors/AppError';
-import CustomersRepository from '../../customers/typeorm/repositories/CustomersRepository';
-import ProductRepository from '../../products/typeorm/repositories/ProductRepository';
-import Order from '../typeorm/entities/Order';
-import OrdersRepository from '../typeorm/repositories/OrdersRepository';
-
-interface IProduct {
-  id: string;
-  quantity: number;
-}
-
-interface IRequestOrder {
-  customer_id: string;
-  products: IProduct[];
-}
+import CustomersRepository from '../../customers/infra/typeorm/repositories/CustomersRepository';
+import ProductRepository from '../../products/infra/typeorm/repositories/ProductRepository';
+import { ICreateOrder } from '../domain/Models/ICreateOrder';
+import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
+import Order from '../infra/typeorm/entities/Order';
+import OrdersRepository from '../infra/typeorm/repositories/OrdersRepository';
 
 class CreateOrderService {
-  async execute({ customer_id, products }: IRequestOrder): Promise<Order> {
-    const ordersRepository = getCustomRepository(OrdersRepository);
-    const customersRepository = getCustomRepository(CustomersRepository);
-    const productsRepository = getCustomRepository(ProductRepository);
+  constructor(
+    @inject('OrdersRepository')
+    private ordersRepository: IOrdersRepository,
 
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepository,
+  ) {}
+
+  async execute({ customer_id, products }: ICreateOrder): Promise<Order> {
     const customerExists = await customersRepository.findById(customer_id);
 
     if (!customerExists) {
