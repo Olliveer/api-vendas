@@ -1,20 +1,18 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import redisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
+import { IDeleteProduct } from '../domain/models/IDeleteProduct';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 
-interface IRequestProduct {
-  id: string;
-}
-
+@injectable()
 class DeleteProductService {
   constructor(
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({ id }: IRequestProduct): Promise<void> {
-    const product = await this.productsRepository.findOne(id);
+  public async execute({ id }: IDeleteProduct): Promise<void> {
+    const product = await this.productsRepository.findById(id);
 
     if (!product) {
       throw new AppError('Product not found.');

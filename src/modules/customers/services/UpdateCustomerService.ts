@@ -1,30 +1,28 @@
-/* eslint-disable class-methods-use-this */
-import { getCustomRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import AppError from '../../../shared/errors/AppError';
-import Customer from '../typeorm/entities/Customer';
-import CustomersRepository from '../typeorm/repositories/CustomersRepository';
+import { IUpdateCustomer } from '../domain/models/IUpdateCustomer';
+import { ICustomersRepository } from '../domain/repositories/ICustomersRespository';
+import Customer from '../infra/typeorm/entities/Customer';
 
-interface IRequestCustomer {
-  id: string;
-  name: string;
-  email: string;
-}
-
+@injectable()
 class UpdateCustomerService {
+  constructor(
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+  ) {}
+
   public async execute({
     id,
     name,
     email,
-  }: IRequestCustomer): Promise<Customer> {
-    const customersRepository = getCustomRepository(CustomersRepository);
-
-    const customer = await customersRepository.findById(id);
+  }: IUpdateCustomer): Promise<Customer> {
+    const customer = await this.customersRepository.findById(id);
 
     if (!customer) {
       throw new AppError('Customer not found.');
     }
 
-    const customerUpdateEmail = await customersRepository.findByEmail(email);
+    const customerUpdateEmail = await this.customersRepository.findByEmail(email);
 
     if (customerUpdateEmail && email !== customer.email) {
       throw new AppError('There is already one customer with this email.');
@@ -33,7 +31,7 @@ class UpdateCustomerService {
     customer.name = name;
     customer.email = email;
 
-    await customersRepository.save(customer);
+    await this.customersRepository.save(customer);
 
     return customer;
   }

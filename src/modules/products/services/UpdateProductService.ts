@@ -1,15 +1,11 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import redisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
-import Product from '../typeorm/entities/Product';
+import { IProduct } from '../domain/models/IProduct';
+import { IUpdateProduct } from '../domain/models/IUpdateProduct';
+import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 
-interface IRequestProduct {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
+@injectable()
 class UpdateProductService {
   constructor(
     @inject('ProductsRepository')
@@ -18,14 +14,14 @@ class UpdateProductService {
 
   public async execute({
     id, name, price, quantity,
-  }: IRequestProduct): Promise<Product> {
-    const product = await productRepository.findOne(id);
+  }: IUpdateProduct): Promise<IProduct> {
+    const product = await this.productsRepository.findById(id);
 
     if (!product) {
       throw new AppError('Product not found.');
     }
 
-    const productExists = await productRepository.findByName(name);
+    const productExists = await this.productsRepository.findByName(name);
 
     if (productExists) {
       throw new AppError('There is already one product with this name');
@@ -37,7 +33,7 @@ class UpdateProductService {
     product.price = price;
     product.quantity = quantity;
 
-    await productRepository.save(product);
+    await this.productsRepository.save(product);
 
     return product;
   }

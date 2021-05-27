@@ -8,7 +8,7 @@ import UpdateCustomerService from '../../../services/UpdateCustomerService';
 
 class CustomersController {
   async index(req: Request, res: Response) {
-    const listCustomers = new ListCustomersService();
+    const listCustomers = container.resolve(ListCustomersService);
 
     const customers = await listCustomers.execute();
 
@@ -18,7 +18,7 @@ class CustomersController {
   async show(req: Request, res: Response) {
     const { id } = req.params;
 
-    const showCustomer = new ShowCustomerService();
+    const showCustomer = container.resolve(ShowCustomerService);
 
     const customer = await showCustomer.execute({ id });
 
@@ -39,7 +39,7 @@ class CustomersController {
     const { name, email } = req.body;
     const { id } = req.params;
 
-    const updateCustomer = new UpdateCustomerService();
+    const updateCustomer = container.resolve(UpdateCustomerService);
 
     const customer = await updateCustomer.execute({
       id, name, email,
@@ -51,7 +51,7 @@ class CustomersController {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
-    const deleteCustomer = new DeleteCustomerService();
+    const deleteCustomer = container.resolve(DeleteCustomerService);
 
     await deleteCustomer.execute({ id });
 

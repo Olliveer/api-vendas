@@ -1,11 +1,11 @@
-/* eslint-disable class-methods-use-this */
 import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
+import { container } from 'tsyringe';
+import UpdateUserAvatarService from '../../../services/UpdateUserAvatarService';
 
 class UserAvatarController {
   async update(req: Request, res: Response): Promise<Response> {
-    const updateAvatar = new UpdateUserAvatarService();
+    const updateAvatar = container.resolve(UpdateUserAvatarService);
 
     const user = await updateAvatar.execute({
       user_id: req.user.id,

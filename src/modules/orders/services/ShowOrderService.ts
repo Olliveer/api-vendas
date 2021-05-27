@@ -1,9 +1,10 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import AppError from '../../../shared/errors/AppError';
 import { IOrder } from '../domain/Models/IOrder';
 import { IShowOrder } from '../domain/Models/IShowOrder';
 import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
 
+@injectable()
 class ShowOrderService {
   constructor(
     @inject('OrdersRepository')

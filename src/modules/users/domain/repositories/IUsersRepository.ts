@@ -2,7 +2,7 @@ import { ICreateUser } from '../models/ICreateUser';
 import { IPaginateUser } from '../models/IPaginateUser';
 import { IUser } from '../models/IUser';
 
-export interface IUserRepository {
+export interface IUsersRepository {
   findAll(): Promise<IUser[]>;
   findAllPaginate(search: string, sortField: string): Promise<IPaginateUser>;
   findByName(name: string): Promise<IUser | undefined>;

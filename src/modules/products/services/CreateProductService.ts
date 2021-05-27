@@ -1,10 +1,11 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import redisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
 import { ICreateProduct } from '../domain/models/ICreateProduct';
 import { IProduct } from '../domain/models/IProduct';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 
+@injectable()
 class CreateProductService {
   constructor(
     @inject('ProductsRepository')
@@ -26,7 +27,11 @@ class CreateProductService {
 
     await redisCache.invalidate('api-vendas-PRODUCTS_LIST');
 
-    await this.productsRepository.save(product);
+    await this.productsRepository.create({
+      name,
+      price,
+      quantity,
+    });
 
     return product;
   }

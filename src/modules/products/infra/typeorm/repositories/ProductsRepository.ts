@@ -9,7 +9,7 @@ import { IUpdateStockProduct } from '../../../domain/models/IUpdateStockProduct'
 import { IProductsRepository } from '../../../domain/repositories/IProductsRepository';
 import Product from '../entities/Product';
 
-class ProductRepository implements IProductsRepository {
+class ProductsRepository implements IProductsRepository {
   private ormRepository: Repository<Product>;
 
   constructor() {
@@ -79,4 +79,4 @@ class ProductRepository implements IProductsRepository {
   }
 }
 
-export default ProductRepository;
+export default ProductsRepository;

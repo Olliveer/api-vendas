@@ -1,7 +1,8 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { IOrderPaginate } from '../domain/Models/IOrderPaginate';
 import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
 
+@injectable()
 class ListOrderService {
   constructor(
     @inject('OrdersRepository')

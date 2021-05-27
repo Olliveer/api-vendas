@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
 import {
   Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import OrdersProducts from '../../../orders/typeorm/entities/OrdersProducts';
+import OrdersProducts from '../../../../orders/infra/typeorm/entities/OrdersProducts';
 
 @Entity('products')
 class Product {
