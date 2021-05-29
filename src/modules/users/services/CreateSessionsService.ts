@@ -2,6 +2,7 @@ import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 import AppError from '../../../shared/errors/AppError';
+import { ICreateSession } from '../domain/models/ICreateSession';
 import { ICreateUser } from '../domain/models/ICreateUser';
 import { IUserAuthenticated } from '../domain/models/IUserAuthenticated';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
@@ -17,7 +18,7 @@ class CreateSessionsService {
     private hashProvider: IHashProvider,
   ) {}
 
-  async execute({ email, password }: ICreateUser): Promise<IUserAuthenticated> {
+  async execute({ email, password }: ICreateSession): Promise<IUserAuthenticated> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
