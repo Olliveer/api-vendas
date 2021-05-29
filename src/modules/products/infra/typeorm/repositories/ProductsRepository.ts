@@ -3,7 +3,6 @@ import {
 } from 'typeorm';
 import { ICreateProduct } from '../../../domain/models/ICreateProduct';
 import { IFindProducts } from '../../../domain/models/IFindProducts';
-import { IProduct } from '../../../domain/models/IProduct';
 import { IProductPaginate } from '../../../domain/models/IProductPaginate';
 import { IUpdateStockProduct } from '../../../domain/models/IUpdateStockProduct';
 import { IProductsRepository } from '../../../domain/repositories/IProductsRepository';
@@ -42,7 +41,7 @@ class ProductsRepository implements IProductsRepository {
     await this.ormRepository.save(products);
   }
 
-  async findById(id: string): Promise<IProduct | undefined> {
+  async findById(id: string): Promise<Product | undefined> {
     const product = await this.ormRepository.findOne(id);
 
     return product;

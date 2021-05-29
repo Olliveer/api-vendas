@@ -5,12 +5,16 @@ import AppError from '../../../shared/errors/AppError';
 import { ICreateUser } from '../domain/models/ICreateUser';
 import { IUserAuthenticated } from '../domain/models/IUserAuthenticated';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 
 @injectable()
 class CreateSessionsService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ email, password }: ICreateUser): Promise<IUserAuthenticated> {
@@ -20,7 +24,7 @@ class CreateSessionsService {
       throw new AppError('Incorrect email or password.', 401);
     }
 
-    const checkHash = await compare(password, user.password);
+    const checkHash = await this.hashProvider.compareHash(password, user.password);
 
     if (!checkHash) {
       throw new AppError('Incorrect email or password.', 401);
